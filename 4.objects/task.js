@@ -9,34 +9,46 @@ let max = new Student ("Максим", "мужской", 21);
 
 
 Student.prototype.setSubject = function (subjectName) {
-  this.subjectName=subjectName;
+  this.subject=subjectName;
 }
 
-function subjectName(subject){
-this.subject = subject; 
-}
-
-Student.prototype.addMark = function (marks) {
-  this.marks=marks;
-}
-
-function marks(mark){
+Student.prototype.addMark = function (mark) {
   if(this.marks === undefined){
     let marks = []; 
     this.marks = marks;
     marks.push(mark);
+    this.marks=marks;
     } else {
-    marks.push(mark);
+    this.marks.push(mark);
     }
-  return marks;
-  }
-
-Student.prototype.exclude = function(exclude) {
-  this.exclude=exclude;
-  }
-
-function exclude(reason){
-  delete Student.marks;
-  delete Student.subjectName;
-  this.reason=reason;
+    
 }
+
+Student.prototype.addMarks = function (...mark) {
+  if(this.marks === undefined){
+    let marks = []; 
+    this.marks = marks;
+    marks.push(...mark);
+    this.marks=marks;
+    } else {
+    this.marks.push(...mark);
+    }
+
+}
+
+Student.prototype.getAverage = function () {
+  let sum = 0;
+  for(i=0; i<this.marks.length; i++){
+    sum += this.marks[i];
+  }
+  this.average = sum/this.marks.length;
+  return this.average;
+    }
+
+
+
+Student.prototype.exclude = function(reason) {
+  delete this.marks;
+  delete this.subject;
+  this.excluded=reason;
+  }

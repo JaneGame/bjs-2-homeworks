@@ -8,7 +8,7 @@ class PrintEditionItem{
     }
 
     fix() {
-        return this.state=this.state*1,5;
+        this.state=this.state*1.5;
     }
 
     set state(fix){
@@ -17,9 +17,7 @@ class PrintEditionItem{
         }else if (fix>100){
             this._state = 100;
         }else{
-            this._state = function (fix){
-                this.state = fix;
-            }
+            this._state = fix;
         }
     }
 
