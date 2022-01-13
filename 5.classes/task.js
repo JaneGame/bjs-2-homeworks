@@ -45,21 +45,21 @@ class Book extends Magazine{
 }
 
 
-class NovelBook extends Magazine{
+class NovelBook extends Book{
     constructor(author, name, releaseDate, pagesCount){
-        super(name, releaseDate, pagesCount, author);
+        super(author, name, releaseDate, pagesCount);
         this.type = "novel";
     }
 }
 
-class FantasticBook extends Magazine{
+class FantasticBook extends Book{
     constructor(author, name, releaseDate, pagesCount){
         super(author, name, releaseDate, pagesCount);
         this.type = "fantastic";
     }
 }
 
-class DetectiveBook extends Magazine{
+class DetectiveBook extends Book{
     constructor(author, name, releaseDate, pagesCount){
         super(author, name, releaseDate, pagesCount);
         this.type = "detective";
@@ -84,23 +84,69 @@ class Library{
 
     findBookBy(type, value){
         for(let i=0; i<this.books.length; i++){
-            if(type==this.name[i]&&type==this.author[i]&&type==this.releaseDate[i]&&type==this.type[i]){
-                return [value];
-            }else{
-                return null;
-            }
+			//Получаем доступ к свойству объекта при помощи property accessor
+            if(this.books[i][type] === value){
+				return this.books[i];
+			}
         }
+		return null;
     }
 
     giveBookByName(bookName){
-        for(let i=0; i<this.books.length; i++){
-            if(bookName==this.name){
-                delete this.books[i];
-                return this.name;
-            }else{
-                return null;
-            }
-        }
+        let reqBook = this.findBookBy('name', bookName);
+		let indexOfBook = this.books.indexOf(reqBook);
+		if (indexOfBook === -1) return null;
+		return this.books.splice(indexOfBook, 1)[0];
     }
 }
 
+//Задание 3
+
+class Student{
+    constructor(name, gender, age) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+  }
+
+  addMark(mark, subjectName){
+    if (mark<1){
+        return "Оценка должна быть от 1 до 5"
+    }else if (mark>5) {
+        return "Оценка должна быть от 1 до 5"
+    }else {
+        if(this.marks === undefined){
+            this.marks = [mark, subjectName];
+            } else {
+            this.marks.push(mark, subjectName);
+            }
+  }}
+
+  
+  getAverageBySubject(subjectName){
+      let sum = 0;
+      let marksNumber = 0;
+      for(let i=1; i<this.marks.length; i=i+2){
+        if (subjectName == this.marks[i]){
+            sum = sum + this.marks[i-1];
+            marksNumber++
+        }else{
+            marksNumber=marksNumber;
+        }
+      }
+      if(sum==0){
+          return "Несуществующий предмет"
+      }else{
+          return sum/marksNumber;
+      }
+    }
+   
+    getAverage(){
+        let sum = 0;
+        for(let i=1; i<this.marks.length; i=i+2){
+          sum = sum + this.marks[i-1];
+          }
+        return sum/(this.marks.length/2);  
+        }
+        
+}
