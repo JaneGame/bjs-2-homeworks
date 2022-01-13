@@ -14,36 +14,32 @@ Student.prototype.setSubject = function (subjectName) {
 
 Student.prototype.addMark = function (mark) {
   if(this.marks === undefined){
-    let marks = []; 
-    this.marks = marks;
-    marks.push(mark);
-    this.marks=marks;
+    this.marks = [mark];
     } else {
     this.marks.push(mark);
     }
     
 }
 
-Student.prototype.addMarks = function (...mark) {
+Student.prototype.addMarks = function (...marks) {
   if(this.marks === undefined){
-    let marks = []; 
     this.marks = marks;
-    marks.push(...mark);
-    this.marks=marks;
     } else {
-    this.marks.push(...mark);
+    this.marks = this.marks.concat(...marks);
     }
-
 }
 
 Student.prototype.getAverage = function () {
   let sum = 0;
+  if(this.marks === undefined){
+    return "Оценки отсутствуют"
+  }else{
   for(i=0; i<this.marks.length; i++){
     sum += this.marks[i];
   }
   this.average = sum/this.marks.length;
   return this.average;
-    }
+    }}
 
 
 
