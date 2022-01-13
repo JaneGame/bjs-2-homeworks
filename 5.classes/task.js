@@ -1,3 +1,5 @@
+//Задание 1
+
 class PrintEditionItem{
     constructor(name, releaseDate, pagesCount){
         this.name = name;
@@ -63,3 +65,42 @@ class DetectiveBook extends Magazine{
         this.type = "detective";
     }
 }
+
+//Задание 2
+
+class Library{
+    constructor(name){
+        this.name = name;
+        this.books = [];
+    }
+
+    addBook(book){
+        if(this.state<30){
+            this.books=this.books;
+        }else{
+            this.books.push(book);
+        }
+    }
+
+    findBookBy(type, value){
+        for(let i=0; i<this.books.length; i++){
+            if(type==this.name[i]&&type==this.author[i]&&type==this.releaseDate[i]&&type==this.type[i]){
+                return [value];
+            }else{
+                return null;
+            }
+        }
+    }
+
+    giveBookByName(bookName){
+        for(let i=0; i<this.books.length; i++){
+            if(bookName==this.name){
+                delete this.books[i];
+                return this.name;
+            }else{
+                return null;
+            }
+        }
+    }
+}
+
