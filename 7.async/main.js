@@ -1,1 +1,10 @@
-// тут вы можете вызывать функции из task.js
+let clock = new AlarmClock();
+clock.addClock('12:20', () => console.log("Пора вставать"), 1);
+clock.addClock('12:21', () => console.log("Давай вставай уже!"), 2);
+clock.addClock('09:02', () => console.log("Help!!!"), 2);
+clock.addClock('12:22', () => console.log("Уже поздно(("), 3);
+clock.printAlarms();
+clock.removeClock(2);
+clock.printAlarms();
+clock.start();
+clock.stop();
