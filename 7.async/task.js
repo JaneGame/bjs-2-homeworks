@@ -22,11 +22,8 @@ class AlarmClock{
         let startLength = this.alarmCollection.length;
         this.alarmCollection = this.alarmCollection.filter((element) =>  id == this.alarmCollection[element] );
         let finishLength = this.alarmCollection.length;
-        if (startLength == finishLength){
-            return false;
-        }else{
-            return true;
-        }
+        return startLength != finishLength
+        
     }
 
     start(){
@@ -34,43 +31,36 @@ class AlarmClock{
             return;
         }
         
-        let timeNow = new Date().toLocaleTimeString("ru-Ru", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+        let interval = setInterval( () => {
+            this.alarmCollection.forEach(item => checkClock(item));
+        },
+            5000
+        );
+        this.timerId = interval;
 
-
-
-        function checkClock (){
-            for (let item = 0; item < this.alarmCollection.length; item++){
-            this.timerId = this.alarmCollection[item].time
-            if (timeNow != this.timerId){
-                console.log("Ещё рано!")
-            }else{
-                console.log("Бззз!!!")
-            }    
-        }
-    }
-
-        while(timeNow == this.timerId){
-            setTimeout(this.alarmCollection.forEach(checkClock()), 60000);
-        }    
+        const checkClock = (item) => {       
+            if (this.getCurrentFormattedTime() === item.time) {
+                return item.callback();
+            }
+        };
     }
 
     stop(){
         if(this.timerId == null){
             return;
         }
-        clearTimeout(id);
+        clearInterval(this.timerId);
         this.timerId = null;
     }
 
     printAlarms(){
+        console.log("Печать всех будильников в количестве:" + this.alarmCollection.length);
         this.alarmCollection.forEach((clock) => console.log(clock.time, clock.id));
     }
 
     clearAlarms(){
-        this.alarmCollection.forEach((clock) => this.removeClock(clock.id))
+        this.alarmCollection = [];
+        this.stop();
     }
 
     getCurrentFormattedTime(){
