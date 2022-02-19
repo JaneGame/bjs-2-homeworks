@@ -20,7 +20,7 @@ class AlarmClock{
     }
     removeClock(id){
         let startLength = this.alarmCollection.length;
-        this.alarmCollection = this.alarmCollection.filter((element) =>  id == this.alarmCollection[element] );
+        this.alarmCollection = this.alarmCollection.filter((element) =>element.id != id);
         let finishLength = this.alarmCollection.length;
         return startLength != finishLength
         
