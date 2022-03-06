@@ -2,21 +2,31 @@
 function cachingDecoratorNew(func) {
   const cache = [];
   function cashing(...args){
-    let hash = args;
-    if (hash in cache) {            
-      console.log("Из кэша: "+ cache[hash]); 
-      return "Из кэша: " + cache[hash];       
-    } else {let result = func(...args);
+    let hash = String(args);
+    let yes = cache.findIndex((index)=> index.hash == hash);
+    if (yes != -1) {
+      let result = cache[yes].result;            
+      console.log("Из кэша: "+ result); 
+      return "Из кэша: " + result;       
+    } 
+    let result = func(...args);
+
       if (cache.length>=5){
         cache.shift()
-      }           
-       cache[hash] = result;            
+      } 
+               
+       cache.push({
+         result:result,
+         hash:hash
+        });            
        console.log("Вычисляем: " + result); 
        return "Вычисляем: " + result;       
       }
+      return cashing;
     }
-    return cashing;
-  }
+    
+
+
 
 //Задача 2
 function debounceDecoratorNew(func, ms) {
@@ -24,12 +34,13 @@ function debounceDecoratorNew(func, ms) {
   let flag = false;
   return function wrapper(...args) {
     if (!flag) {
-      func.apply(this, args);  
+      func.apply(this, args);
     }
   flag = true;
-	clearTimeout(allImmediate);
+  clearTimeout(allImmediate);
     allImmediate = setTimeout(() => {
-	    flag = false;
+      func.apply(this, args);
+    flag = false;
     }, ms);
   };
 }
@@ -47,7 +58,8 @@ function debounceDecorator2(func, ms) {
   flag = true;
 	clearTimeout(allImmediate);
     allImmediate = setTimeout(() => {
-	  flag = false;
+      func.apply(this, args);
+	    flag = false;
     }, ms);  
   };
   return wrapper;  
